@@ -1,0 +1,95 @@
+name: 'Applies a Terraform plan for AZURE' 
+description: 'Download a Terraform plan workspace artifact created by `Pwd9000-ML/terraform-azurerm-plan` and apply with AzureRM backend'
+
+inputs:
+  path:
+    description: '(Optional) Specifies the path of the root terraform module.'
+    required: false
+    type: string
+    default: "."
+
+  tf_version:
+    description: '(Optional) Specifies version of Terraform to use. e.g: 1.1.0 Default=latest.'
+    required: false
+    type: string
+    default: latest
+
+  az_resource_group:
+    description: '(Required) Specifies the Azure Resource Group where the backend storage account is hosted.'
+    required: true
+    type: string
+
+  az_storage_acc:
+    description: '(Required) Specifies the Azure Storage Account where the backend state is hosted.'
+    required: true
+    type: string
+
+  az_container_name:
+    description: '(Required) Specifies the Azure Storage account container where backend Terraform state is hosted.'
+    required: true
+    type: string
+
+  tf_key:
+    description: '(Required) Specifies the Terraform state file name for this plan.'
+    required: true
+    type: string
+
+  arm_client_id:
+    description: 'Specifies the Azure ARM CLIENT ID.'
+    required: true
+
+  arm_client_secret:
+    description: 'Specifies the Azure ARM CLIENT SECRET.'
+    required: true
+
+  arm_subscription_id:
+    description: 'Specifies the Azure ARM SUBSCRIPTION ID.'
+    required: true
+
+  arm_tenant_id:
+    description: 'Specifies the Azure ARM TENANT ID.'
+    required: true
+
+# https://actions-cool.github.io/github-action-branding/
+branding:
+  icon: 'align-left'
+  color: 'blue'
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Set Environment VARS
+      shell: bash
+      id: vars
+      run: |
+          echo "ARM_CLIENT_ID=${{ inputs.arm_client_id }}" >> $GITHUB_ENV
+          echo "ARM_CLIENT_SECRET=${{ inputs.arm_client_secret }}" >> $GITHUB_ENV
+          echo "ARM_SUBSCRIPTION_ID=${{ inputs.arm_subscription_id }}" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=${{ inputs.arm_tenant_id }}" >> $GITHUB_ENV
+      working-directory: ${{ inputs.path }}
+
+    - name: Download Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ${{ inputs.tf_key }}
+        path: ${{ inputs.path }}
+
+    - name: Decompress TF Plan artifact
+      run: unzip ${{ inputs.tf_key }}.zip
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1.3.2
+      with:
+        terraform_version: ${{ inputs.tf_version }}
+
+    - name: Terraform Init
+      shell: bash
+      id: init
+      run: terraform init --backend-config="storage_account_name=${{ inputs.az_storage_acc }}" --backend-config="container_name=${{ inputs.az_container_name }}" --backend-config="resource_group_name=${{ inputs.az_resource_group }}" --backend-config="key=${{ inputs.tf_key }}"
+      working-directory: ${{ inputs.path }}
+
+    - name: Terraform Apply
+      shell: bash
+      run: terraform apply plan.tfplan
+      working-directory: ${{ inputs.path }}
