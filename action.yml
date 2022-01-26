@@ -76,7 +76,9 @@ runs:
         path: ${{ inputs.path }}
 
     - name: Decompress TF Plan artifact
+      shell: bash
       run: unzip ${{ inputs.tf_key }}.zip
+      working-directory: ${{ inputs.path }}
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1.3.2
