@@ -1,6 +1,6 @@
 # Terraform Apply - GitHub Action (terraform-azurerm-apply)
 
-GitHub Action - Download a Terraform plan workspace artifact created by `Pwd9000-ML/terraform-azurerm-plan` and apply with AzureRM backend.  
+Download a Terraform plan workflow artifact created by `Pwd9000-ML/terraform-azurerm-plan` and apply with AzureRM backend.  
 
 See my [detailed tutorial]() for more usage details.  
 
@@ -75,7 +75,7 @@ jobs:
           arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}             ## (Required) ARM Tenant ID
 ```
 
-The terraform plan will be created and is compressed and published to the workspace as an artifact using the same name of the input `tf_key`:  
+The terraform plan will be created and is compressed and published to the workflow as an artifact using the same name of the input `tf_key`:  
 
 ![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-apply/master/assets/artifact.png)  
 
@@ -103,7 +103,7 @@ The terraform apply action will download and apply the artifact created by the p
 
 None.  
 
-* Plan artifact is downloaded from workspace artifacts. (Plan can be created using `Pwd9000-ML/terraform-azurerm-plan` Action.)
+* Plan artifact is downloaded from workflow artifacts. (Plan can be created using `Pwd9000-ML/terraform-azurerm-plan` Action.)
 
 ## Versions of runner that can be used
 
