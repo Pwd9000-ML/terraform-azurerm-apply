@@ -2,7 +2,7 @@
 
 Download a Terraform plan workflow artifact created by `Pwd9000-ML/terraform-azurerm-plan` and apply with AzureRM backend.  
 
-See my [detailed tutorial]() for more usage details.  
+See my [detailed tutorial](https://dev.to/pwd9000/multi-environment-azure-deployments-with-terraform-and-github-2450) for more usage details.  
 
 **NOTE:** Can be used independently with Action: **[Pwd9000-ML/terraform-azurerm-plan](https://github.com/Pwd9000-ML/terraform-azurerm-plan)**.  
 
