@@ -1,4 +1,4 @@
-name: 'Apply a Terraform plan for AZURE' 
+name: 'Terraform Apply for AZURE' 
 description: 'Download a Terraform plan workspace artifact created by `Pwd9000-ML/terraform-azurerm-plan` and apply with AzureRM backend'
 
 inputs:
