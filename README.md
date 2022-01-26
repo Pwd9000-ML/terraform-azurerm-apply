@@ -27,8 +27,6 @@ steps:
 
 Usage example of a terraform plan with apply.
 
-## Usage
-
 ```yaml
 name: "TF-Deployment-01"
 on:
