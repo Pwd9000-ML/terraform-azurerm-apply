@@ -6,6 +6,27 @@ See my [detailed tutorial]() for more usage details.
 
 **NOTE:** Can be used independently as well with Action: **[Pwd9000-ML/terraform-azurerm-plan](https://github.com/Pwd9000-ML/terraform-azurerm-plan)**.  
 
+## Installation
+
+```yaml
+steps:
+  - name: Dev TF Deploy
+    uses: Pwd9000-ML/terraform-azurerm-apply@v1.0.0
+    with:
+      az_resource_group: "resource-group-name" ## (Required) AZ backend - AZURE Resource Group hosting terraform backend storage acc 
+      az_storage_acc: "storage-account-name"   ## (Required) AZ backend - AZURE terraform backend storage acc 
+      az_container_name: "container-name"      ## (Required) AZ backend - AZURE storage container hosting state files 
+      tf_key: "state-file-name"                ## (Required) AZ backend - Specifies name that will be given to terraform state file 
+      arm_client_id: ${{ secrets.ARM_CLIENT_ID }}             ## (Required) ARM Client ID 
+      arm_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}     ## (Required)ARM Client Secret
+      arm_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }} ## (Required) ARM Subscription ID
+      arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}             ## (Required) ARM Tenant ID
+```
+
+## Usage
+
+Usage example of a terraform plan with apply.
+
 ## Usage
 
 ```yaml
@@ -55,6 +76,10 @@ jobs:
           arm_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }} ## (Required) ARM Subscription ID
           arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}             ## (Required) ARM Tenant ID
 ```
+
+**NOTE:** If `enable_TFSEC` is set to `true` on plan stage, Terraform IaC will be scanned using TFSEC and results are published to the GitHub Project `Security` tab:  
+
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-apply/master/assets/tfsec.png)
 
 ## Inputs
 
