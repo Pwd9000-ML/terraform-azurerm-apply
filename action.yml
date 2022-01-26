@@ -73,7 +73,7 @@ runs:
       uses: actions/download-artifact@v2
       with:
         name: ${{ inputs.tf_key }}
-        path: ${{ inputs.path }}
+       # path: ${{ inputs.path }}
 
     - name: Decompress TF Plan artifact
       shell: bash
