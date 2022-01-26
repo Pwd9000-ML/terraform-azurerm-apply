@@ -2,11 +2,11 @@ name: 'Applies a Terraform plan for AZURE'
 description: 'Download a Terraform plan workspace artifact created by `Pwd9000-ML/terraform-azurerm-plan` and apply with AzureRM backend'
 
 inputs:
-  path:
-    description: '(Optional) Specifies the path of the root terraform module.'
-    required: false
-    type: string
-    default: "."
+#  path:
+#    description: '(Optional) Specifies the path of the root terraform module.'
+#    required: false
+#    type: string
+#    default: "."
 
   tf_version:
     description: '(Optional) Specifies version of Terraform to use. e.g: 1.1.0 Default=latest.'
@@ -67,7 +67,7 @@ runs:
           echo "ARM_CLIENT_SECRET=${{ inputs.arm_client_secret }}" >> $GITHUB_ENV
           echo "ARM_SUBSCRIPTION_ID=${{ inputs.arm_subscription_id }}" >> $GITHUB_ENV
           echo "ARM_TENANT_ID=${{ inputs.arm_tenant_id }}" >> $GITHUB_ENV
-      working-directory: ${{ inputs.path }}
+      #working-directory: ${{ inputs.path }}
 
     - name: Download Artifact
       uses: actions/download-artifact@v2
@@ -78,7 +78,7 @@ runs:
     - name: Decompress TF Plan artifact
       shell: bash
       run: unzip ${{ inputs.tf_key }}.zip
-      working-directory: ${{ inputs.path }}
+     # working-directory: ${{ inputs.path }}
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1.3.2
@@ -89,9 +89,9 @@ runs:
       shell: bash
       id: init
       run: terraform init --backend-config="storage_account_name=${{ inputs.az_storage_acc }}" --backend-config="container_name=${{ inputs.az_container_name }}" --backend-config="resource_group_name=${{ inputs.az_resource_group }}" --backend-config="key=${{ inputs.tf_key }}"
-      working-directory: ${{ inputs.path }}
+   #   working-directory: ${{ inputs.path }}
 
     - name: Terraform Apply
       shell: bash
       run: terraform apply plan.tfplan
-      working-directory: ${{ inputs.path }}
+   #   working-directory: ${{ inputs.path }}
