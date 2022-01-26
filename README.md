@@ -75,6 +75,12 @@ jobs:
           arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}             ## (Required) ARM Tenant ID
 ```
 
+The terraform plan will be created and is compressed and published to the workspace as an artifact:  
+
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-apply/master/assets/artifact.png)  
+
+The terraform apply action will download and apply the artifact created by the plan action.  
+
 **NOTE:** If `enable_TFSEC` is set to `true` on plan stage, Terraform IaC will be scanned using TFSEC and results are published to the GitHub Project `Security` tab:  
 
 ![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-apply/master/assets/tfsec.png)
