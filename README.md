@@ -4,7 +4,7 @@ GitHub Action - Download a Terraform plan workspace artifact created by `Pwd9000
 
 See my [detailed tutorial]() for more usage details.  
 
-**NOTE:** This plan is a **Child**-Action of **Parent**-Action: **[Pwd9000-ML/terraform-azurerm]()**. Can be used independently as well with **Child**-Action: **[Pwd9000-ML/terraform-azurerm-plan](https://github.com/Pwd9000-ML/terraform-azurerm-plan)**.  
+**NOTE:** Can be used independently as well with Action: **[Pwd9000-ML/terraform-azurerm-plan](https://github.com/Pwd9000-ML/terraform-azurerm-plan)**.  
 
 ## Usage
 
