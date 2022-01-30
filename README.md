@@ -11,7 +11,7 @@ See my [detailed tutorial](https://dev.to/pwd9000/multi-environment-azure-deploy
 ```yaml
 steps:
   - name: Dev TF Deploy
-    uses: Pwd9000-ML/terraform-azurerm-apply@v1.0.0
+    uses: Pwd9000-ML/terraform-azurerm-apply@v1.0.2
     with:
       az_resource_group: "resource-group-name" ## (Required) AZ backend - AZURE Resource Group hosting terraform backend storage acc 
       az_storage_acc: "storage-account-name"   ## (Required) AZ backend - AZURE terraform backend storage acc 
@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Dev TF Plan
-        uses: Pwd9000-ML/terraform-azurerm-plan@v1.0.0
+        uses: Pwd9000-ML/terraform-azurerm-plan@v1.0.3
         with:
           path: "path-to-TFmodule"                 ## (Optional) Specify path TF module relevant to repo root. Default="."
           az_resource_group: "resource-group-name" ## (Required) AZ backend - AZURE Resource Group hosting terraform backend storage acc 
@@ -51,7 +51,7 @@ jobs:
           az_container_name: "container-name"      ## (Required) AZ backend - AZURE storage container hosting state files 
           tf_key: "state-file-name"                ## (Required) AZ backend - Specifies name that will be given to terraform state file and plan artifact
           tf_vars_file: "tfvars-file-name"         ## (Required) Specifies Terraform TFVARS file name inside module path
-          enable_TFSEC: true                       ## (Optional)  Enable TFSEC IaC scans
+          enable_TFSEC: true                       ## (Optional)  Enable TFSEC IaC scans (Private repo requires GitHub enterprise)
           arm_client_id: ${{ secrets.ARM_CLIENT_ID }}             ## (Required) ARM Client ID 
           arm_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}     ## (Required)ARM Client Secret
           arm_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }} ## (Required) ARM Subscription ID
@@ -63,7 +63,7 @@ jobs:
     environment: Development #(Optional) If using GitHub Environments      
     steps:
       - name: Dev TF Deploy
-        uses: Pwd9000-ML/terraform-azurerm-apply@v1.0.0
+        uses: Pwd9000-ML/terraform-azurerm-apply@v1.0.2
         with:
           az_resource_group: "resource-group-name" ## (Required) AZ backend - AZURE Resource Group hosting terraform backend storage acc 
           az_storage_acc: "storage-account-name"   ## (Required) AZ backend - AZURE terraform backend storage acc 
@@ -84,6 +84,8 @@ The terraform apply action will download and apply the artifact created by the p
 **NOTE:** If `enable_TFSEC` is set to `true` on plan stage, Terraform IaC will be scanned using TFSEC and results are published to the GitHub Project `Security` tab:  
 
 ![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-apply/master/assets/tfsec.png)
+
+If using a private repository, GitHub enterprise is needed when enabling TFSEC. However if a public repository is used, code analysis is included and TFSEC can be enabled on public repositories without the need for a GitHub enterprise account.  
 
 ## Inputs
 
