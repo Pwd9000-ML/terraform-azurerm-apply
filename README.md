@@ -31,9 +31,7 @@ Usage example of a terraform plan with apply.
 name: "TF-Deployment-01"
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      - master
+
 jobs:
   Plan_Dev:
     runs-on: ubuntu-latest
