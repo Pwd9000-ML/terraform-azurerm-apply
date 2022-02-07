@@ -2,7 +2,7 @@
 
 Download a Terraform plan workflow artifact created by `Pwd9000-ML/terraform-azurerm-plan` and apply with AzureRM backend.  
 
-See my [detailed tutorial](https://dev.to/pwd9000/multi-environment-azure-deployments-with-terraform-and-github-2450) for more usage details.  
+See my [detailed tutorial](https://dev.to/pwd9000/multi-environment-azure-deployments-with-terraform-and-github-part-2-pdl) for more usage details.  
 
 **NOTE:** Can be used independently with Action: **[Pwd9000-ML/terraform-azurerm-plan](https://github.com/marketplace/actions/terraform-plan-for-azure)**.  
 
@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Dev TF Plan
-        uses: Pwd9000-ML/terraform-azurerm-plan@v1.0.3
+        uses: Pwd9000-ML/terraform-azurerm-plan@v1.0.4
         with:
           path: "path-to-TFmodule"                 ## (Optional) Specify path TF module relevant to repo root. Default="."
           az_resource_group: "resource-group-name" ## (Required) AZ backend - AZURE Resource Group hosting terraform backend storage acc 
@@ -54,6 +54,7 @@ jobs:
           arm_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}     ## (Required)ARM Client Secret
           arm_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }} ## (Required) ARM Subscription ID
           arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}             ## (Required) ARM Tenant ID
+          github_token: ${{ secrets.GITHUB_TOKEN }} ## (Required) Needed to comment output on PR's. ${{ secrets.GITHUB_TOKEN }} already has permissions.
 
   Apply_Dev:
     needs: Plan_Dev
