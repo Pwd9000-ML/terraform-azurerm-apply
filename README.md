@@ -25,7 +25,7 @@ steps:
       arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}             ## (Required) ARM Tenant ID
 ```
 
-## Usage Example 1 - Deploy Plan and Apply (BUILD)
+### Usage Example 1 - Deploy Plan and Apply (BUILD)
 
 Usage example of a terraform deploy plan with applying the deploy (creating resources).
 
@@ -51,7 +51,7 @@ jobs:
           path: "path-to-TFmodule"                 ## (Optional) Specify path TF module relevant to repo root. Default="."
           plan_mode: "deploy"                      ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
           tf_version: "latest"                     ## (Optional) Specifies version of Terraform to use. e.g: 1.1.0 Default="latest"
-          tf_vars_file: "tfvars-file-name"         ## (Optional) Specifies Terraform TFVARS file name inside module path. Default=null
+          tf_vars_file: "tfvars-file-name"         ## (Required) Specifies Terraform TFVARS file name inside module path
           tf_key: "state-file-name"                ## (Required) AZ backend - Specifies name that will be given to terraform state file and plan artifact
           enable_TFSEC: true                       ## (Optional) Enable TFSEC IaC scans (Private repo requires GitHub enterprise). Default=false
           az_resource_group: "resource-group-name" ## (Required) AZ backend - AZURE Resource Group hosting terraform backend storage account
@@ -109,7 +109,7 @@ jobs:
           path: "path-to-TFmodule"                 ## (Optional) Specify path TF module relevant to repo root. Default="."
           plan_mode: "destroy"                     ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
           tf_version: "latest"                     ## (Optional) Specifies version of Terraform to use. e.g: 1.1.0 Default="latest"
-          tf_vars_file: null                       ## (Optional) Specifies Terraform TFVARS file name inside module path. Default=null
+          tf_vars_file: "tfvars-file-name"         ## (Required) Specifies Terraform TFVARS file name inside module path
           tf_key: "state-file-name"                ## (Required) AZ backend - Specifies name that will be given to terraform state file and plan artifact
           enable_TFSEC: true                       ## (Optional) Enable TFSEC IaC scans (Private repo requires GitHub enterprise). Default=false
           az_resource_group: "resource-group-name" ## (Required) AZ backend - AZURE Resource Group hosting terraform backend storage account
@@ -153,7 +153,7 @@ The terraform apply action will download and apply the plan inside of the artifa
 
 ![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-plan/master/assets/tfsec.png)  
 
-If using a private repository, GitHub enterprise is needed when enabling TFSEC. However if a public repository is used, code analysis is included and TFSEC can be enabled on public repositories without the need for a GitHub enterprise account.  
+If using a private repository, GitHub enterprise is needed when enabling TFSEC. However if a public repository is used, code analysis is included and TFSEC can be enabled on public repositories without the need for a GitHub enterprise account.
 
 ## Inputs
 
