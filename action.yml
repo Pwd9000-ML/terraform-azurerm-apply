@@ -2,11 +2,22 @@ name: 'Terraform Apply for AZURE'
 description: 'Download a Terraform plan workflow artifact created by `Pwd9000-ML/terraform-azurerm-plan` and apply with AzureRM backend'
 
 inputs:
+  plan_mode:
+    description: '(Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default=deploy.'
+    required: false
+    type: string
+    default: "deploy"
+
   tf_version:
     description: '(Optional) Specifies version of Terraform to use. e.g: 1.1.0 Default=latest.'
     required: false
     type: string
     default: latest
+
+  tf_key:
+    description: '(Required) Specifies the Terraform state file name for this plan.'
+    required: true
+    type: string
 
   az_resource_group:
     description: '(Required) Specifies the Azure Resource Group where the backend storage account is hosted.'
@@ -20,11 +31,6 @@ inputs:
 
   az_container_name:
     description: '(Required) Specifies the Azure Storage account container where backend Terraform state is hosted.'
-    required: true
-    type: string
-
-  tf_key:
-    description: '(Required) Specifies the Terraform state file name for this plan.'
     required: true
     type: string
 
@@ -81,6 +87,12 @@ runs:
       id: init
       run: terraform init --backend-config="storage_account_name=${{ inputs.az_storage_acc }}" --backend-config="container_name=${{ inputs.az_container_name }}" --backend-config="resource_group_name=${{ inputs.az_resource_group }}" --backend-config="key=${{ inputs.tf_key }}"
 
-    - name: Terraform Apply
+    - name: Terraform Apply Deploy
+      if: ${{ inputs.plan_mode == 'deploy' }}
       shell: bash
-      run: terraform apply plan.tfplan
+      run: terraform apply deploy_plan.tfplan
+
+    - name: Terraform Apply Destroy
+      if: ${{ inputs.plan_mode == 'destroy' }}
+      shell: bash
+      run: terraform apply destroy_plan.tfplan
