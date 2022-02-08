@@ -25,12 +25,11 @@ steps:
       arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}             ## (Required) ARM Tenant ID
 ```
 
-
 ## Examples
 
-See the following [GitHub repository](https://github.com/Pwd9000-ML/Azure-Terraform-Deployments) for a full working demo of the usage of this action.
+Check out the following [GitHub repository](https://github.com/Pwd9000-ML/Azure-Terraform-Deployments) for a full working demo and usage examples of this action under a workflow called [Marketplace_Example.yml](https://github.com/Pwd9000-ML/Azure-Terraform-Deployments/blob/master/.github/workflows/Marketplace_Example.yml).
 
-### Usage Example 1 - Deploy Plan and Apply (BUILD)
+## Usage Example 1 - Deploy Plan and Apply (BUILD)
 
 Usage example of a terraform deploy plan with applying the deploy (creating resources).
 
@@ -51,7 +50,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Dev TF Plan Deploy
-        uses: Pwd9000-ML/terraform-azurerm-plan@v1.1.0
+        uses: Pwd9000-ML/terraform-azurerm-plan@v1.1.1
         with:
           path: "path-to-TFmodule"                 ## (Optional) Specify path TF module relevant to repo root. Default="."
           plan_mode: "deploy"                      ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
@@ -109,7 +108,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Dev TF Plan Destroy
-        uses: Pwd9000-ML/terraform-azurerm-plan@v1.1.0
+        uses: Pwd9000-ML/terraform-azurerm-plan@v1.1.1
         with:
           path: "path-to-TFmodule"                 ## (Optional) Specify path TF module relevant to repo root. Default="."
           plan_mode: "destroy"                     ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
@@ -158,7 +157,7 @@ The terraform apply action will download and apply the plan inside of the artifa
 
 ![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-plan/master/assets/tfsec.png)  
 
-If using a private repository, GitHub enterprise is needed when enabling TFSEC. However if a public repository is used, code analysis is included and TFSEC can be enabled on public repositories without the need for a GitHub enterprise account.
+If using a private repository, GitHub enterprise is needed when enabling TFSEC. However if a public repository is used, code analysis is included and TFSEC can be enabled on public repositories without the need for a GitHub enterprise account.  
 
 ## Inputs
 
