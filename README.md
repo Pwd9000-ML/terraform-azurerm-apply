@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Dev TF Plan Deploy
-        uses: Pwd9000-ML/terraform-azurerm-plan@v1.1.1
+        uses: Pwd9000-ML/terraform-azurerm-plan@v1.1.2
         with:
           path: "path-to-TFmodule"                 ## (Optional) Specify path TF module relevant to repo root. Default="."
           plan_mode: "deploy"                      ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
@@ -108,7 +108,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Dev TF Plan Destroy
-        uses: Pwd9000-ML/terraform-azurerm-plan@v1.1.1
+        uses: Pwd9000-ML/terraform-azurerm-plan@v1.1.2
         with:
           path: "path-to-TFmodule"                 ## (Optional) Specify path TF module relevant to repo root. Default="."
           plan_mode: "destroy"                     ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
