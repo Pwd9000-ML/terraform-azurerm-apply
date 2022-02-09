@@ -11,7 +11,7 @@ See my [detailed tutorial](https://dev.to/pwd9000/multi-environment-azure-deploy
 ```yaml
 steps:
   - name: Dev TF Deploy
-    uses: Pwd9000-ML/terraform-azurerm-apply@v1.1.0
+    uses: Pwd9000-ML/terraform-azurerm-apply@v1.2.0
     with:
       plan_mode: "deploy"                      ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
       tf_version: "latest"                     ## (Optional) Specifies version of Terraform to use. e.g: 1.1.0 Default="latest"
@@ -29,7 +29,7 @@ steps:
 
 Check out the following [GitHub repository](https://github.com/Pwd9000-ML/Azure-Terraform-Deployments) for a full working demo and usage examples of this action under a workflow called [Marketplace_Example.yml](https://github.com/Pwd9000-ML/Azure-Terraform-Deployments/blob/master/.github/workflows/Marketplace_Example.yml).
 
-## Usage Example 1 - Deploy Plan and Apply (BUILD)
+## Usage Example 1 - Deploy Plan and Apply Deploy (BUILD)
 
 Usage example of a terraform deploy plan with applying the deploy (creating resources).
 
@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Dev TF Plan Deploy
-        uses: Pwd9000-ML/terraform-azurerm-plan@v1.1.2
+        uses: Pwd9000-ML/terraform-azurerm-plan@v1.2.0
         with:
           path: "path-to-TFmodule"                 ## (Optional) Specify path TF module relevant to repo root. Default="."
           plan_mode: "deploy"                      ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
@@ -73,7 +73,7 @@ jobs:
     environment: Development #(Optional) If using GitHub Environments      
     steps:
       - name: Dev TF Deploy
-        uses: Pwd9000-ML/terraform-azurerm-apply@v1.1.0
+        uses: Pwd9000-ML/terraform-azurerm-apply@v1.2.0
         with:
           plan_mode: "deploy"                      ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
           tf_version: "latest"                     ## (Optional) Specifies version of Terraform to use. e.g: 1.1.0 Default="latest"
@@ -87,7 +87,7 @@ jobs:
           arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}             ## (Required) ARM Tenant ID
 ```
 
-## Usage Example 2 - Destroy Plan and Apply (DESTROY)
+## Usage Example 2 - Destroy Plan and Apply Destroy (DESTROY)
 
 Usage example of a terraform destroy plan with applying the destroy (removing resources).
 
@@ -108,7 +108,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Dev TF Plan Destroy
-        uses: Pwd9000-ML/terraform-azurerm-plan@v1.1.2
+        uses: Pwd9000-ML/terraform-azurerm-plan@v1.2.0
         with:
           path: "path-to-TFmodule"                 ## (Optional) Specify path TF module relevant to repo root. Default="."
           plan_mode: "destroy"                     ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
@@ -131,7 +131,7 @@ jobs:
     environment: Development #(Optional) If using GitHub Environments      
     steps:
       - name: Dev TF Destroy
-        uses: Pwd9000-ML/terraform-azurerm-apply@v1.1.0
+        uses: Pwd9000-ML/terraform-azurerm-apply@v1.2.0
         with:
           plan_mode: "destroy"                     ## (Optional) Specify plan mode. Valid options are "deploy" or "destroy". Default="deploy"
           tf_version: "latest"                     ## (Optional) Specifies version of Terraform to use. e.g: 1.1.0 Default="latest"
@@ -145,13 +145,13 @@ jobs:
           arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}             ## (Required) ARM Tenant ID
 ```
 
-In both examples the terraform plan will be created and is compressed and published to the workflow as an artifact using the same name of the input `tf_key`:  
+In both examples the terraform plan will be created and is compressed and published to the workflow as an artifact using the same name of the inputs `[plan_mode]-[tf_key]`:  
 
 ![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-plan/master/assets/artifact.png)  
 
-The artifact will either contain a deployment plan called `deploy_plan.tfplan` if `plan_mode: "deploy"` is used, or a destroy plan called `destroy_plan.tfplan` if `plan_mode: "destroy"` is used.  
+The artifacts will either contain a deployment plan called `deploy_plan.tfplan` if `plan_mode: "deploy"` is used, or a destroy plan called `destroy_plan.tfplan` if `plan_mode: "destroy"` is used.  
 
-The terraform apply action will download and apply the plan inside of the artifact created by the plan action using the same `tf_key` and will start a deploy or destroy action based on the `plan_mode`.  
+The terraform apply action will download and apply the plan inside of the artifact created by the plan action using the same `[plan_mode]-[tf_key]` and will start a deploy or destroy action based on the `plan_mode`.  
 
 **NOTE:** If `enable_TFSEC` is set to `true` on plan stage, Terraform IaC will be scanned using TFSEC and results are published to the GitHub Project `Security` tab:  
 
