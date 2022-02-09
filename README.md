@@ -151,7 +151,7 @@ In both examples the terraform plan will be created and is compressed and publis
 
 The artifacts will either contain a deployment plan called `deploy_plan.tfplan` if `plan_mode: "deploy"` is used, or a destroy plan called `destroy_plan.tfplan` if `plan_mode: "destroy"` is used.  
 
-The terraform apply action will download and apply the plan inside of the artifact created by the plan action using the same `[plan_mode]-[tf_key]` and will start a deploy or destroy action based on the `plan_mode`.  
+The terraform apply action will download and apply the plan inside of the artifact created by the plan action using the same `[plan_mode]-[tf_key]` and apply the relevant plan based on which `plan_mode` was used in the creation of the plan artifact.  
 
 **NOTE:** If `enable_TFSEC` is set to `true` on plan stage, Terraform IaC will be scanned using TFSEC and results are published to the GitHub Project `Security` tab:  
 
