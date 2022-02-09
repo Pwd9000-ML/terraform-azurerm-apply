@@ -71,11 +71,13 @@ runs:
     - name: Download Artifact
       uses: actions/download-artifact@v2
       with:
-        name: ${{ inputs.tf_key }}
+        name: "${{ inputs.plan_mode }}-${{ inputs.tf_key }}"
+        path: ${{ inputs.plan_mode }}/staging
 
     - name: Decompress TF Plan artifact
       shell: bash
       run: unzip ${{ inputs.tf_key }}.zip
+      working-directory: ${{ inputs.plan_mode }}/staging
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1.3.2
@@ -86,13 +88,16 @@ runs:
       shell: bash
       id: init
       run: terraform init --backend-config="storage_account_name=${{ inputs.az_storage_acc }}" --backend-config="container_name=${{ inputs.az_container_name }}" --backend-config="resource_group_name=${{ inputs.az_resource_group }}" --backend-config="key=${{ inputs.tf_key }}"
+      working-directory: ${{ inputs.plan_mode }}/staging
 
     - name: Terraform Apply Deploy
       if: ${{ inputs.plan_mode == 'deploy' }}
       shell: bash
       run: terraform apply deploy_plan.tfplan
+      working-directory: ${{ inputs.plan_mode }}/staging
 
     - name: Terraform Apply Destroy
       if: ${{ inputs.plan_mode == 'destroy' }}
       shell: bash
       run: terraform apply destroy_plan.tfplan
+      working-directory: ${{ inputs.plan_mode }}/staging
