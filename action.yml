@@ -76,7 +76,7 @@ runs:
 
     - name: Decompress TF Plan artifact
       shell: bash
-      run: unzip ${{ inputs.tf_key }}.zip
+      run: unzip ${{ inputs.plan_mode }}${{ inputs.tf_key }}.zip
       working-directory: ${{ inputs.plan_mode }}/staging
 
     - name: Setup Terraform
