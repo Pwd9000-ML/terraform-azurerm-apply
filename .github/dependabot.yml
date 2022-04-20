@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions" # search for actions - there are other options available
+    directory: "/" # search in .github/workflows under root `/` or action.yml at root
+    schedule:
+      interval: "daily"
