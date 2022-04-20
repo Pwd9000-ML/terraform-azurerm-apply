@@ -80,7 +80,7 @@ runs:
       working-directory: ${{ inputs.plan_mode }}/staging
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1.3.2
+      uses: hashicorp/setup-terraform@v2.0.0
       with:
         terraform_version: ${{ inputs.tf_version }}
 
