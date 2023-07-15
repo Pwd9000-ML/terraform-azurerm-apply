@@ -69,7 +69,7 @@ runs:
           echo "ARM_TENANT_ID=${{ inputs.arm_tenant_id }}" >> $GITHUB_ENV
 
     - name: Download Artifact
-      uses: actions/download-artifact@v3.0.1
+      uses: actions/download-artifact@v3.0.2
       with:
         name: "${{ inputs.plan_mode }}-${{ inputs.tf_key }}"
         path: ${{ inputs.plan_mode }}/staging
